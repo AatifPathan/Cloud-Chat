@@ -1,0 +1,668 @@
+// Import futuristic fonts
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+// Light mode color palette with neon accents
+$primary-bg: #0a0a0f;
+$secondary-bg: #1a1a2e;
+$accent-bg: #16213e;
+$glass-bg: rgba(255, 255, 255, 0.9);
+$glass-border: rgba(255, 255, 255, 0.2);
+$neon-blue: #00f5ff;
+$neon-purple: #8a2be2;
+$neon-pink: #ff1493;
+$neon-green: #39ff14;
+$simple-blue: #4a90e2; // Simple blue color for buttons
+$dark-blue: #2c3e50; // Dark blue for Cloud Chat and register link
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-muted: #9ca3af;
+$light-bg: #ffffff;
+$light-border: #e5e7eb;
+$light-hover: #f8fafc;
+
+// Mixins
+@mixin mobile {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin glassmorphism {
+  background: $glass-bg;
+  backdrop-filter: blur(10px);
+  border: 1px solid $glass-border;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+@mixin neon-glow($color) {
+  box-shadow: 0 0 5px $color, 0 0 10px $color, 0 0 15px $color, 0 0 20px $color;
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Global styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, $primary-bg 0%, $secondary-bg 100%);
+  color: $text-primary;
+  overflow-x: hidden;
+}
+
+// Animated background - KEEPING SAME
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+  animation: backgroundShift 20s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes backgroundShift {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+// Form Container (Login/Register) - Light mode
+.formContainer {
+  background: linear-gradient(135deg, $primary-bg 0%, $secondary-bg 100%);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      linear-gradient(45deg, transparent 30%, rgba(0, 245, 255, 0.03) 50%, transparent 70%),
+      linear-gradient(-45deg, transparent 30%, rgba(138, 43, 226, 0.03) 50%, transparent 70%);
+    animation: scanlines 3s linear infinite;
+  }
+
+  .formWrapper {
+    @include glassmorphism;
+    padding: 40px 50px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    min-width: 400px;
+    @include smooth-transition;
+
+    &:hover {
+      transform: translateY(-5px);
+      @include neon-glow($neon-blue);
+    }
+
+    .logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 32px;
+      font-weight: 900;
+      color: $dark-blue;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+      text-shadow: none;
+      animation: none;
+    }
+
+    .title {
+      color: $text-secondary;
+      font-size: 14px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+
+      input {
+        padding: 15px 20px;
+        border: none;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        color: $text-primary;
+        font-size: 16px;
+        font-family: 'Rajdhani', sans-serif;
+        border: 1px solid $light-border;
+        @include smooth-transition;
+
+        &::placeholder {
+          color: $text-muted;
+        }
+
+        &:focus {
+          outline: none;
+          border-color: $neon-blue;
+          @include neon-glow($neon-blue);
+        }
+      }
+
+      button {
+        background: $simple-blue;
+        color: #ffffff;
+        padding: 15px 25px;
+        font-weight: 600;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        @include smooth-transition;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          background: darken($simple-blue, 10%);
+          
+          &::before {
+            left: 100%;
+          }
+        }
+      }
+
+      // Remove avatar label completely
+      label {
+        display: none;
+      }
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 14px;
+      margin-top: 10px;
+      
+      a {
+        color: $dark-blue;
+        text-decoration: none;
+        @include smooth-transition;
+        
+        &:hover {
+          color: darken($dark-blue, 15%);
+        }
+      }
+    }
+  }
+}
+
+// Home/Chat Container - Light mode
+.home {
+  background: linear-gradient(135deg, $primary-bg 0%, $secondary-bg 100%);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  .container {
+    @include glassmorphism;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    @include smooth-transition;
+
+    &:hover {
+      @include neon-glow($neon-blue);
+    }
+
+    @include tablet {
+      width: 95%;
+      height: 95vh;
+    }
+
+    .sidebar {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.95);
+      position: relative;
+      border-right: 1px solid $light-border;
+
+      .navbar {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.98);
+        height: 70px;
+        padding: 0 20px;
+        justify-content: space-between;
+        color: $text-primary;
+        border-bottom: 1px solid $light-border;
+
+        .logo {
+          font-family: 'Orbitron', monospace;
+          font-weight: 700;
+          font-size: 18px;
+          color: $dark-blue;
+          text-shadow: none;
+          
+          @include tablet {
+            display: none;
+          }
+        }
+
+        .user {
+          display: flex;
+          gap: 15px;
+          align-items: center;
+
+          // Remove avatar image
+          img {
+            display: none;
+          }
+
+          button {
+            background: $simple-blue;
+            color: #ffffff;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            @include smooth-transition;
+            
+            &:hover {
+              transform: scale(1.05);
+              background: darken($simple-blue, 10%);
+            }
+            
+            @include tablet {
+              position: absolute;
+              bottom: 10px;
+              right: 10px;
+            }
+          }
+        }
+      }
+
+      .search {
+        border-bottom: 1px solid $light-border;
+        padding: 15px;
+
+        .searchForm {
+          position: relative;
+
+          input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid $light-border;
+            border-radius: 25px;
+            color: $text-primary;
+            outline: none;
+            padding: 12px 20px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            @include smooth-transition;
+
+            &::placeholder {
+              color: $text-muted;
+            }
+
+            &:focus {
+              border-color: $neon-blue;
+              @include neon-glow($neon-blue);
+            }
+          }
+        }
+      }
+
+      .userChat {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: $text-primary;
+        cursor: pointer;
+        @include smooth-transition;
+        border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+
+        &:hover {
+          background: rgba(0, 245, 255, 0.1);
+          transform: translateX(5px);
+          @include neon-glow($neon-blue);
+        }
+
+        // Remove avatar image
+        img {
+          display: none;
+        }
+
+        .userChatInfo {
+          span {
+            font-size: 16px;
+            font-weight: 600;
+            color: $text-primary;
+          }
+          
+          p {
+            font-size: 12px;
+            color: $text-muted;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+
+    .chat {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+
+      .chatInfo {
+        height: 70px;
+        background: rgba(255, 255, 255, 0.98);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        color: $text-primary;
+        border-bottom: 1px solid $light-border;
+
+        span {
+          font-size: 18px;
+          font-weight: 600;
+          text-align: center;
+        }
+
+        .chatIcons {
+          display: flex;
+          gap: 15px;
+
+          img {
+            height: 24px;
+            width: 24px;
+            cursor: pointer;
+            filter: invert(0.3);
+            @include smooth-transition;
+            
+            &:hover {
+              filter: invert(0) drop-shadow(0 0 5px $neon-blue);
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+
+      .noChatSelected {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.95);
+        
+        p {
+          color: $text-secondary;
+          font-size: 18px;
+          font-weight: 400;
+          text-align: center;
+          padding: 20px;
+          animation: fadeIn 0.5s ease-in-out;
+        }
+      }
+
+      .messages {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 20px;
+        height: calc(100% - 140px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: $neon-blue $light-bg;
+
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: $light-bg;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: $neon-blue;
+          border-radius: 3px;
+        }
+
+        .message {
+          display: flex;
+          gap: 15px;
+          margin-bottom: 20px;
+          animation: messageSlide 0.3s ease-out;
+
+          .messageInfo {
+            display: flex;
+            flex-direction: column;
+            color: $text-muted;
+            font-weight: 300;
+            font-size: 12px;
+
+            // Remove avatar image
+            img {
+              display: none;
+            }
+
+            span {
+              text-align: center;
+            }
+          }
+
+          .messageContent {
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            p {
+              background: rgba(255, 255, 255, 0.9);
+              border: 1px solid $light-border;
+              padding: 12px 18px;
+              border-radius: 0 15px 15px 15px;
+              max-width: max-content;
+              font-size: 14px;
+              line-height: 1.4;
+              word-wrap: break-word;
+              border-left: 3px solid $neon-blue;
+              color: $text-primary;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            img {
+              max-width: 200px;
+              border-radius: 10px;
+              border: 1px solid $light-border;
+            }
+          }
+
+          &.owner {
+            flex-direction: row-reverse;
+
+            .messageContent {
+              align-items: flex-end;
+              
+              p {
+                background: linear-gradient(45deg, $neon-blue, $neon-purple);
+                color: #ffffff;
+                border-radius: 15px 0 15px 15px;
+                border-left: none;
+                border-right: 3px solid $neon-pink;
+                border: none;
+              }
+            }
+          }
+        }
+      }
+
+      .input {
+        height: 70px;
+        background: rgba(255, 255, 255, 0.98);
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border-top: 1px solid $light-border;
+
+        input {
+          flex: 1;
+          border: none;
+          outline: none;
+          background: rgba(255, 255, 255, 0.8);
+          color: $text-primary;
+          font-size: 16px;
+          padding: 12px 20px;
+          border-radius: 25px;
+          font-family: 'Rajdhani', sans-serif;
+          border: 1px solid $light-border;
+          @include smooth-transition;
+
+          &::placeholder {
+            color: $text-muted;
+          }
+
+          &:focus {
+            @include neon-glow($neon-blue);
+          }
+        }
+
+        .send {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          img {
+            height: 24px;
+            width: 24px;
+            cursor: pointer;
+            filter: invert(0.3);
+            @include smooth-transition;
+            
+            &:hover {
+              filter: invert(0) drop-shadow(0 0 5px $neon-blue);
+              transform: scale(1.1);
+            }
+          }
+
+          button {
+            border: none;
+            padding: 12px 20px;
+            color: #ffffff;
+            background: $simple-blue;
+            cursor: pointer;
+            border-radius: 25px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            @include smooth-transition;
+            
+            &:hover {
+              transform: scale(1.05);
+              background: darken($simple-blue, 10%);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animations - KEEPING SAME
+@keyframes textGlow {
+  0% { text-shadow: 0 0 5px $neon-blue; }
+  100% { text-shadow: 0 0 20px $neon-blue, 0 0 30px $neon-blue; }
+}
+
+@keyframes scanlines {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes messageSlide {
+  0% { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% { 
+    opacity: 0;
+  }
+  100% { 
+    opacity: 1;
+  }
+}
+
+// Loading animation
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid $light-border;
+  border-radius: 50%;
+  border-top-color: $neon-blue;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
